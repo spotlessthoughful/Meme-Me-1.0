@@ -22,7 +22,11 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem title="Item" image="camera.fill" catalog="system" id="9O6-1S-lQk"/>
-                                    <barButtonItem title="Album" id="rnQ-pP-jHd"/>
+                                    <barButtonItem title="Album" id="rnQ-pP-jHd">
+                                        <connections>
+                                            <action selector="pickAlbumImage:" destination="BYZ-38-t0r" id="bkt-lD-v68"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVg-TC-OkY">
@@ -73,6 +77,9 @@
                             <constraint firstItem="Ly7-jq-Iyx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uDP-xS-H26"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imagePickerView" destination="Ly7-jq-Iyx" id="d7R-44-OUQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
