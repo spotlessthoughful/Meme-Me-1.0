@@ -21,7 +21,11 @@
                                     <constraint firstAttribute="height" constant="49" id="fVn-EE-8ca"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="Item" image="camera.fill" catalog="system" id="9O6-1S-lQk"/>
+                                    <barButtonItem title="Item" image="camera.fill" catalog="system" id="9O6-1S-lQk">
+                                        <connections>
+                                            <action selector="pickCameraImage:" destination="BYZ-38-t0r" id="Lff-MD-u8E"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Album" id="rnQ-pP-jHd">
                                         <connections>
                                             <action selector="pickAlbumImage:" destination="BYZ-38-t0r" id="bkt-lD-v68"/>
@@ -78,7 +82,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="albumButton" destination="rnQ-pP-jHd" id="ywU-rW-FEh"/>
                         <outlet property="bottomTextField" destination="cAg-un-d4T" id="Tyv-v6-BE6"/>
+                        <outlet property="cameraButton" destination="9O6-1S-lQk" id="KBB-G9-lmJ"/>
                         <outlet property="imagePickerView" destination="Ly7-jq-Iyx" id="d7R-44-OUQ"/>
                         <outlet property="topTextField" destination="Low-3e-THs" id="TwR-xa-lf0"/>
                     </connections>
