@@ -67,7 +67,11 @@
                                 <items>
                                     <barButtonItem image="square.and.arrow.up" catalog="system" id="aTc-m3-r7B"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="1Qm-G4-5pm"/>
-                                    <barButtonItem title="Cancel" id="mUT-hG-nq5"/>
+                                    <barButtonItem title="Cancel" id="mUT-hG-nq5">
+                                        <connections>
+                                            <action selector="clearImageView:" destination="BYZ-38-t0r" id="qt0-Xl-TEy"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -96,7 +100,9 @@
                         <outlet property="bottomTextField" destination="cAg-un-d4T" id="Tyv-v6-BE6"/>
                         <outlet property="bottomToolBar" destination="Aei-ay-WPN" id="HgO-g3-dUS"/>
                         <outlet property="cameraButton" destination="9O6-1S-lQk" id="KBB-G9-lmJ"/>
+                        <outlet property="cancelButton" destination="mUT-hG-nq5" id="NVr-aF-DD6"/>
                         <outlet property="imagePickerView" destination="Ly7-jq-Iyx" id="d7R-44-OUQ"/>
+                        <outlet property="shareButton" destination="aTc-m3-r7B" id="VoF-lf-ha4"/>
                         <outlet property="topTextField" destination="Low-3e-THs" id="TwR-xa-lf0"/>
                         <outlet property="topToolBar" destination="BND-7W-zek" id="Q4b-J4-i9U"/>
                     </connections>
