@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imagePickerView: UIImageView!
@@ -16,14 +16,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     
+    // MARK: - Meme Text Attributes
+    let memeTextAttributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.strokeColor: UIColor.black,
+        NSAttributedString.Key.foregroundColor: UIColor.white,
+        NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSAttributedString.Key.strokeWidth: -1.0
+    ]
+    
     // MARK: - Initial Loading
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // topTextField settings
+        topTextField.defaultTextAttributes = memeTextAttributes
+        //topTextField.text = "TOP"
+        topTextField.textAlignment = .center
+        topTextField.tag = 0
+        //bottomTextFieldSettings
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        //bottomTextField.text = "BOTTOM"
+        bottomTextField.textAlignment = .center
+        bottomTextField.tag = 1
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        //subscribeToKeyboardNotifications()
     }
     
     // MARK: - Image Picker Methods
@@ -36,6 +55,46 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Text Field Methods
+    //func textFieldDidBeginEditing(_ textField: UITextField) {
+    //    print("editing")
+    //    textField.text = ""
+    //}
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.tag == 1 {
+            self.subscribeToKeyboardNotifications()
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: - Keyboard And View Visibility
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification:Notification) {
+        view.frame.origin.y -= getKeyboardHeight(notification)
+    }
+    
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
     }
     
     // MARK: - IBActions
