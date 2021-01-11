@@ -119,7 +119,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // MARK: - Create And Save/Share Meme
-    func save() {
+    func save()  {
         _ = Meme(topText: topTextField!, bottomText: bottomTextField!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
     }
     
@@ -168,7 +168,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func shareMeme(_ sender: Any) {
-        let meme = generateMemedImage()
+        let meme: UIImage = generateMemedImage()
+        let activityViewController = UIActivityViewController(activityItems: [meme], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.barButtonItem = shareButton
+        activityViewController.completionWithItemsHandler = {(type, ok, items, error) in
+            if ok {
+                self.save()
+            }
+        }
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
 }
