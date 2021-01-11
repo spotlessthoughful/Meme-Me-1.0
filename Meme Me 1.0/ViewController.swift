@@ -15,6 +15,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var navBar: UINavigationBar!
     
     // MARK: - Meme Text Attributes
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
@@ -23,6 +25,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedString.Key.strokeWidth: -1.0
     ]
+    
+    // MARK: - Meme Struct
+    struct Meme {
+        var topText: UITextField?
+        var bottomText: UITextField?
+        var originalImage: UIImage?
+        var memedImage: UIImage?
+    }
     
     // MARK: - Initial Loading
     override func viewDidLoad() {
@@ -101,6 +111,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.cgRectValue.height
+    }
+    
+    // MARK: - Create And Save/Share Meme
+    func save() {
+        _ = Meme(topText: topTextField!, bottomText: bottomTextField!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
+    }
+    
+    func generateMemedImage() -> UIImage {
+        // Hide Bars
+        hideBars(true)
+        
+        // Generate Meme
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        // Show Bars
+        hideBars(false)
+        
+        return memedImage
+    }
+    
+    // MARK: - Hide Or Show Tool bar And Navigation Bar
+    func hideBars(_ hidden: Bool) {
+        toolBar.isHidden = hidden
+        navBar.isHidden = hidden
     }
     
     // MARK: - IBActions
