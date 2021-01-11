@@ -65,7 +65,11 @@
                                     <constraint firstAttribute="height" constant="49" id="G1t-85-Lr1"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem image="square.and.arrow.up" catalog="system" id="aTc-m3-r7B"/>
+                                    <barButtonItem image="square.and.arrow.up" catalog="system" id="aTc-m3-r7B">
+                                        <connections>
+                                            <action selector="shareMeme:" destination="BYZ-38-t0r" id="rO6-Jj-guT"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="1Qm-G4-5pm"/>
                                     <barButtonItem title="Cancel" id="mUT-hG-nq5">
                                         <connections>

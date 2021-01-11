@@ -63,6 +63,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickerView.image = image
+            shareButton.isEnabled = true
         }
         dismiss(animated: true, completion: nil)
     }
@@ -159,7 +160,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func clearImageView(_ sender: Any) {
-        self.imagePickerView.image = nil
+        imagePickerView.image = nil
+        shareButton.isEnabled = false
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
+        dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func shareMeme(_ sender: Any) {
+        let meme = generateMemedImage()
+    }
+    
 }
 
