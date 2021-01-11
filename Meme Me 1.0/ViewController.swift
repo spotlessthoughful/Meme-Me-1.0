@@ -15,8 +15,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var toolBar: UIToolbar!
-    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var bottomToolBar: UIToolbar!
+    @IBOutlet weak var topToolBar: UIToolbar!
+    
     
     // MARK: - Meme Text Attributes
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
@@ -135,8 +136,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // MARK: - Hide Or Show Tool bar And Navigation Bar
     func hideBars(_ hidden: Bool) {
-        toolBar.isHidden = hidden
-        navBar.isHidden = hidden
+        bottomToolBar.isHidden = hidden
+        topToolBar.isHidden = hidden
     }
     
     // MARK: - IBActions
