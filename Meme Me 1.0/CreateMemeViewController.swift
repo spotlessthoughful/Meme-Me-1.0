@@ -9,7 +9,7 @@ import UIKit
 
 class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    // MARK: - IBOutlets
+    // MARK: - IBOutlets -
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
@@ -21,7 +21,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     
-    // MARK: - Meme Text Attributes
+    // MARK: - Meme Text Attributes -
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.black,
         NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -29,37 +29,21 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         NSAttributedString.Key.strokeWidth: -1.0
     ]
     
-    // MARK: - Meme Struct
-    struct Meme {
-        var topText: UITextField?
-        var bottomText: UITextField?
-        var originalImage: UIImage?
-        var memedImage: UIImage?
-    }
-    
-    // MARK: - Initial Loading
+    // MARK: - Initial Loading -
     override func viewDidLoad() {
         super.viewDidLoad()
-        // topTextField settings
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.text = "TOP"
-        topTextField.textAlignment = .center
-        topTextField.tag = 0
-        //bottomTextFieldSettings
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.text = "BOTTOM"
-        bottomTextField.textAlignment = .center
-        bottomTextField.tag = 1
+        // textField settings
+        setupTextFieldStyle(toTextField: topTextField, defaultText: "TOP")
+        setupTextFieldStyle(toTextField: bottomTextField, defaultText: "BOTTOM")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         shareButton.isEnabled = self.imagePickerView.image != nil
-        //subscribeToKeyboardNotifications()
     }
     
-    // MARK: - Image Picker Methods
+    // MARK: - Image Picker Methods -
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickerView.image = image
@@ -72,7 +56,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Text Field Methods
+    // MARK: - Text Field Methods -
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.text == "TOP" || textField.text == "BOTTOM" {
             textField.text = ""
@@ -89,7 +73,13 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         return true
     }
     
-    // MARK: - Keyboard And View Visibility
+    func setupTextFieldStyle(toTextField textField: UITextField, defaultText: String) {
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.text = defaultText
+        textField.textAlignment = .center
+    }
+    
+    // MARK: - Keyboard And View Visibility -
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
@@ -118,7 +108,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         return keyboardSize.cgRectValue.height
     }
     
-    // MARK: - Create And Save/Share Meme
+    // MARK: - Create And Save/Share Meme -
     func save()  {
         _ = Meme(topText: topTextField!, bottomText: bottomTextField!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
     }
@@ -138,13 +128,13 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         return memedImage
     }
     
-    // MARK: - Hide Or Show Tool bar And Navigation Bar
+    // MARK: - Hide Or Show Tool bar And Navigation Bar -
     func hideBars(_ hidden: Bool) {
         bottomToolBar.isHidden = hidden
         topToolBar.isHidden = hidden
     }
     
-    // MARK: - IBActions
+    // MARK: - IBActions -
     @IBAction func pickAlbumImage(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
