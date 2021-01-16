@@ -9,7 +9,7 @@ import UIKit
 
 class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    // MARK: IBOutlets 
+    // MARK: IBOutlets
     
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
@@ -142,20 +142,22 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
         topToolBar.isHidden = hidden
     }
     
+    // MARK: ImagePicker
+    func imagePicker(_ type: UIImagePickerController.SourceType){
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = type
+        present(picker, animated: true, completion: nil)
+    }
+    
     // MARK: IBActions
     
     @IBAction func pickAlbumImage(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+        imagePicker(.photoLibrary)
     }
     
     @IBAction func pickCameraImage(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        present(imagePicker, animated: true, completion: nil)
+        imagePicker(.camera)
     }
     
     @IBAction func clearImageView(_ sender: Any) {
